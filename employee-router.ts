@@ -16,6 +16,7 @@ const employee: Employee[] = [
     email: "email1@gmail.com",
     createdAt: new Date(),
     updatedAt: new Date(),
+    address : []
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ const employee: Employee[] = [
     email: "email2@gmail.com",
     createdAt: new Date(),
     updatedAt: new Date(),
+    address:[]
   },
 ];
 
