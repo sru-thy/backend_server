@@ -23,15 +23,36 @@ const employee: Employee[] = [
   },
 ];
 
+import { Client } from "pg";
+
 employeeRouter.get("/", (req, res) => {
   console.log(req.url);
   res.status(200).send(employee);
 });
 
-employeeRouter.get("/:id", (req, res) => {
+employeeRouter.get("/:id", async (req, res) => {
   console.log(req.url);
+  const client = new Client({
+    host: "localhost",
+    port: 8765,
+    database: "training",
+    user: "postgres",
+    password: "postgres",
+  });
+  await client.connect();
+  const result = await client.query("SELECT * FROM employees WHERE id=$1", [
+    req.params.id,
+  ]);
 
-  res.status(200).send(employee.find((x) => x.id.toString() === req.params.id));
+//   const rawEmployee = result.rows[0];
+
+//   const employee = new Employee();
+//   employee.id =rawEmployee.id;
+//   employee.createdAt = rawEmployee.createdAt;
+
+
+  res.status(200).send(result.rows[0]);
+  await client.end();
 });
 
 employeeRouter.post("/", (req, res) => {
