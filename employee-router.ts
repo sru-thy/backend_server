@@ -3,7 +3,7 @@ import express from "express";
 const employeeRouter = express.Router();
 
 import Employee from "./Employee";
-import { DataSource } from "typeorm";
+import { DataSource, Like } from "typeorm";
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import AppDataSource from "./data-source";
 
@@ -33,7 +33,15 @@ const empRepository = AppDataSource.getRepository(Employee);
 employeeRouter.get("/", async (req, res) => {
   console.log(req.url);
 
-  const result = await empRepository.find();
+  const nameFilter = req.query.name;
+
+  const result = await empRepository.find({
+    where: {
+      name: Like("%" + nameFilter + "%"),
+    },
+  });
+
+  // const result = await empRepository.find()
   res.status(200).send(result);
 });
 
