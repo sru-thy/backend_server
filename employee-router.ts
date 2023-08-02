@@ -9,24 +9,24 @@ import AppDataSource from "./data-source";
 
 var count = 2;
 
-const employee: Employee[] = [
-  {
-    id: 1,
-    name: "Name1",
-    email: "email1@gmail.com",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    address : []
-  },
-  {
-    id: 2,
-    name: "Name2",
-    email: "email2@gmail.com",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    address:[]
-  },
-];
+// const employee: Employee[] = [
+//   {
+//     id: 1,
+//     name: "Name1",
+//     email: "email1@gmail.com",
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//     // address : []
+//   },
+//   {
+//     id: 2,
+//     name: "Name2",
+//     email: "email2@gmail.com",
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//     // address:[]
+//   },
+// ];
 
 const empRepository = AppDataSource.getRepository(Employee);
 
@@ -67,7 +67,7 @@ employeeRouter.delete("/:id", async (req, res) => {
   const employeetodelete = await empRepository.findOneBy({
     id: Number(req.params.id),
   });
-  const result = await empRepository.remove(employeetodelete);
+  const result = await empRepository.softRemove(employeetodelete);
   res.status(204).send("employee deleted");
 });
 
