@@ -2,6 +2,7 @@ import "reflect-metadata"
 import express from "express";
 import {employeeRouter} from "./employee-router"
 import loggerMiddleware from "./loggerMiddleware";
+import AppDataSource from "./data-source";
 
 
 const server = express();
@@ -16,6 +17,12 @@ server.get("/", (req, res) => {
     res.status(200).send("this is an employee management site");
   });
 
-server.listen(3000, () => {
-  console.log("server is listening to 3000");
-});
+
+(async() => {
+    await AppDataSource.initialize();
+    server.listen(3000, () => {
+        console.log("server is listening to 3000");
+      });
+})()
+
+
