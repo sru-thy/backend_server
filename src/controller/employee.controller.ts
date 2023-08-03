@@ -3,11 +3,9 @@ import { EmployeeService } from "../service/employee.service";
 
 export class EmployeeController {
   public router: express.Router;
-  private employeeService: EmployeeService;
 
-  constructor() {
+  constructor( private employeeService: EmployeeService) {
     this.router = express.Router();
-    this.employeeService = new EmployeeService();
     this.router.get("/",this.getAllEmployees)
     this.router.get("/:id",this.getEmployeeByID)
   }

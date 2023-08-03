@@ -3,24 +3,14 @@ import AppDataSource from "../db/postgres.db";
 import Employee from "../entity/employee.entity";
 
 export class EmployeeRepository {
-  private dataSource: DataSource;
-  private empRepository: Repository<Employee>
 
-  constructor() {
-   
-    this.dataSource = AppDataSource;
-    this.empRepository = this.dataSource.getRepository(Employee);
-  }
+  constructor(private empRepository: Repository<Employee>) {}
 
   find(): Promise<Employee[]> {
-  
     return this.empRepository.find();
   }
 
   findOneBy(id: number): Promise<Employee> {
- 
     return this.empRepository.findOneBy({ id: id });
   }
-
-  
 }
