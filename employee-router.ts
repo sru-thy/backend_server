@@ -3,8 +3,6 @@ import express from "express";
 const employeeRouter = express.Router();
 
 import Employee from "./Employee";
-import { DataSource, FindOptionsWhere, Like } from "typeorm";
-import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import AppDataSource from "./data-source";
 
 var count = 2;
