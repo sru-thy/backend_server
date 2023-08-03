@@ -1,5 +1,4 @@
 import { Entity, ManyToOne } from "typeorm";
-import Employee from "./Employee";
 
 @Entity()
 export class Address {
