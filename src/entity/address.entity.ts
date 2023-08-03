@@ -1,4 +1,14 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import Employee from "./employee.entity";
 
 @Entity()
@@ -11,8 +21,14 @@ export class Address {
   line2: string;
   @Column()
   pincode: string;
+  @CreateDateColumn()
+  createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
+  @DeleteDateColumn()
+  deletedAt: Date;
 
-
-//   @ManyToOne(() => Employee, (employee) => employee.address)
-//   employee : Employee
+  @OneToOne(() => Employee, (employee) => employee.address)
+  @JoinColumn()
+  employee: Employee;
 }
