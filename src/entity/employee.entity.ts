@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, DeleteDateColumn } from "typeorm";
+import { Address } from "./address.entity";
 
 
 @Entity("employees")
@@ -15,6 +16,8 @@ class Employee {
     updatedAt: Date;
     @DeleteDateColumn()
     deletedAt : Date;
+    @Column({nullable:true})
+    age: number;
     // @OneToMany(() => Address,(address) => (address.employee))
     // address: Address[]
 }
