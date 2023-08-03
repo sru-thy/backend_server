@@ -43,7 +43,7 @@ export class EmployeeService {
     employeetoupdate.email = email;
     employeetoupdate.name = name;
     employeetoupdate.address.line1 = address.line1;
-    employeetoupdate.address.line2 = address.line1;
+    employeetoupdate.address.line2 = address.line2;
     employeetoupdate.address.pincode = address.pincode;
     return this.empRepository.updateEmployee(employeetoupdate);
   }
