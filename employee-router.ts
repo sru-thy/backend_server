@@ -34,16 +34,17 @@ employeeRouter.get("/", async (req, res) => {
   console.log(req.url);
 
   const nameFilter = req.query.name as string;
+  const emailFilter = req.query.email as string;
 
-  const filters: FindOptionsWhere<Employee> = {};
+  const qb = await empRepository.createQueryBuilder();
 
   if (nameFilter) {
-    filters.name = Like(`${nameFilter}%`);
+    qb.andWhere("name LIKE :name", { name: `${nameFilter}%` });
   }
-
-  const result = await empRepository.find({where: filters });
-
-  // const result = await empRepository.find()
+  if (emailFilter) {
+    qb.andWhere("email LIKE :email", { name: `%${emailFilter}%` });
+  }
+  const result = await qb.getMany();
   res.status(200).send(result);
 });
 
