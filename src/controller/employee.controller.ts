@@ -45,7 +45,7 @@ export class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      const { name, email, address } = req.body;
+      const { name, email, address,password } = req.body;
       const createEmployeeDto = plainToInstance(CreateEmployeeDto, req.body);
       const errors = await validate(createEmployeeDto);
 
@@ -55,9 +55,10 @@ export class EmployeeController {
       }
 
       const employee = await this.employeeService.createEmployee(
-        name,
-        email,
-        address
+        createEmployeeDto.name,
+        createEmployeeDto.email,
+        createEmployeeDto.password,
+        createEmployeeDto.address
       );
       res.status(201).send(employee);
     } catch (err) {

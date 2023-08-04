@@ -14,4 +14,8 @@ export class CreateEmployeeDto {
   @ValidateNested({ each: true })
   @Type(() => CreateAddressDto)
   address: Address;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
 }

@@ -2,6 +2,7 @@ import { Address } from "../entity/address.entity";
 import Employee from "../entity/employee.entity";
 import HttpException from "../exceptions/http.exception";
 import { EmployeeRepository } from "../repository/employee.repository";
+import bcrypt from 'bcrypt';
 
 export class EmployeeService {
   constructor(private empRepository: EmployeeRepository) {}
@@ -18,10 +19,11 @@ export class EmployeeService {
     }
     return employee;
   }
-  createEmployee(name: string, email: string, address: any): Promise<Employee> {
+  async createEmployee(name: string, email: string, password:string, address: any): Promise<Employee> {
     const newEmployee = new Employee();
     newEmployee.email = email;
     newEmployee.name = name;
+    newEmployee.password = await bcrypt.hash(password,10);
 
     const newAddress = new Address();
     newAddress.line1 = address.line1;
