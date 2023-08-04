@@ -13,7 +13,7 @@ class Employee extends AbstractEntity {
   @OneToOne(() => Address, (address) => address.employee, { cascade: true,})
   address: Address;
 
-  @Column()
+  @Column({select: false})
   password: string;
 }
 
