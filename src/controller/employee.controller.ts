@@ -7,15 +7,16 @@ import ValidationException from "../exceptions/validation.exception";
 import UpdateEmployeeDto from "../dto/updateEmployee.dto";
 
 import authenticate from "../middleware/authenticateMiddleware";
+import authorize from "../middleware/authorizeMiddleware";
 
 export class EmployeeController {
   public router: express.Router;
 
   constructor(private employeeService: EmployeeService) {
     this.router = express.Router();
-    this.router.get("/", authenticate  ,this.getAllEmployees);
+    this.router.get("/", authenticate ,this.getAllEmployees);
     this.router.get("/:id", authenticate,this.getEmployeeByID);
-    this.router.post("/", authenticate,this.createEmployee);
+    this.router.post("/", authenticate,authorize,this.createEmployee);
     this.router.put("/:id", authenticate,this.updateEmployee);
     this.router.delete("/:id",authenticate,this.deleteEmployee);
     this.router.post("/login", this.loginEmployee);
@@ -59,7 +60,9 @@ export class EmployeeController {
         createEmployeeDto.name,
         createEmployeeDto.email,
         createEmployeeDto.password,
-        createEmployeeDto.address
+        createEmployeeDto.role,
+        createEmployeeDto.address,
+     
       );
       res.status(201).send(employee);
     } catch (err) {

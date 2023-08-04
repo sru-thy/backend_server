@@ -5,6 +5,8 @@ import { EmployeeRepository } from "../repository/employee.repository";
 import bcrypt from "bcrypt";
 
 import Jwt from "jsonwebtoken";
+import { Role } from "../utils/role.enum";
+import { jwtPayload } from "../utils/jwtPayload.type";
 
 export class EmployeeService {
   constructor(private empRepository: EmployeeRepository) {}
@@ -25,17 +27,21 @@ export class EmployeeService {
     name: string,
     email: string,
     password: string,
+    role: Role,
     address: any
   ): Promise<Employee> {
     const newEmployee = new Employee();
     newEmployee.email = email;
     newEmployee.name = name;
     newEmployee.password = await bcrypt.hash(password, 10);
+    newEmployee.role = role;
 
     const newAddress = new Address();
     newAddress.line1 = address.line1;
     newAddress.line2 = address.line2;
     newAddress.pincode = address.pincode;
+
+
 
     newEmployee.address = newAddress;
 
@@ -72,9 +78,10 @@ export class EmployeeService {
       throw new HttpException(401, "Incorrect username or Password");
     }
 
-    const payload = {
+    const payload : jwtPayload = {
       name: employee.name,
       email: employee.email,
+      role: employee.role,
     };
 
     const token = Jwt.sign(payload,"ABCDE", {
