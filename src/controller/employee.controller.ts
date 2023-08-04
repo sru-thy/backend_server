@@ -4,6 +4,8 @@ import { plainToInstance } from "class-transformer";
 import { CreateEmployeeDto } from "../dto/createEmployee.dto";
 import { validate } from "class-validator";
 import HttpException from "../exceptions/http.exception";
+import ValidationException from "../exceptions/validation.exception";
+import UpdateEmployeeDto from "../dto/updateEmployee.dto";
 
 export class EmployeeController {
   public router: express.Router;
@@ -48,8 +50,8 @@ export class EmployeeController {
       const errors = await validate(createEmployeeDto);
 
       if (errors.length > 0) {
-        console.log(JSON.stringify(errors));
-        throw new HttpException(400,JSON.stringify(errors))
+        console.log(errors);
+        throw new ValidationException(400, errors);
       }
 
       const employee = await this.employeeService.createEmployee(
@@ -63,16 +65,32 @@ export class EmployeeController {
     }
   };
 
-  updateEmployee = async (req: express.Request, res: express.Response) => {
-    const { name, email, address } = req.body;
-    const id = Number(req.params.id);
-    const employee = await this.employeeService.updateEmployee(
-      id,
-      name,
-      email,
-      address
-    );
-    res.status(201).send(employee);
+  updateEmployee = async (
+    req: express.Request,
+    res: express.Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { name, email, address } = req.body;
+      const id = Number(req.params.id);
+
+      const updateEmployeeDto = plainToInstance(UpdateEmployeeDto, req.body);
+      const errors = await validate(updateEmployeeDto);
+
+      if (errors.length > 0) {
+        console.log(errors);
+        throw new ValidationException(400, errors);
+      }
+      const employee = await this.employeeService.updateEmployee(
+        id,
+        name,
+        email,
+        address
+      );
+      res.status(201).send(employee);
+    } catch (err) {
+      next(err);
+    }
   };
 
   deleteEmployee = async (req: express.Request, res: express.Response) => {
