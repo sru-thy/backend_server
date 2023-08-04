@@ -14,9 +14,9 @@ export class EmployeeRepository {
     });
   }
 
-  async findOneBy(id: number): Promise<Employee> {
+  async findOneBy(filter :Partial<Employee>): Promise<Employee> {
     return await this.empRepository.findOne({
-      where: { id: id },
+      where: filter,
       relations: {
         address: true,
       },
@@ -32,7 +32,9 @@ export class EmployeeRepository {
   }
 
   async deleteEmployee(id: number): Promise<Employee> {
-    const employeetodelete = await this.findOneBy(id);
+    const employeetodelete = await this.findOneBy({id:id});
     return this.empRepository.softRemove(employeetodelete);
   }
+
+
 }

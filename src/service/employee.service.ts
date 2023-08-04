@@ -12,7 +12,7 @@ export class EmployeeService {
   }
 
   async getEmployeeByID(id: number): Promise<any> {
-    const employee = await this.empRepository.findOneBy(id);
+    const employee = await this.empRepository.findOneBy({id:id});
     console.log(employee)
     if (!employee) {
       throw new HttpException(404, "employee not found");
@@ -41,7 +41,7 @@ export class EmployeeService {
     email: string,
     address: any
   ): Promise<Employee> {
-    const employeetoupdate = await this.empRepository.findOneBy(id);
+    const employeetoupdate = await this.empRepository.findOneBy({id : id});
     employeetoupdate.email = email;
     employeetoupdate.name = name;
     employeetoupdate.address.line1 = address.line1;
@@ -52,5 +52,20 @@ export class EmployeeService {
 
   deleteEmployee(id: number): Promise<Employee> {
     return this.empRepository.deleteEmployee(id);
+  }
+
+
+
+  loginEmployee = async (email:string,password:string) => {
+    const employee = await this.empRepository.findOneBy({email: email})
+    if(!employee){
+      throw new HttpException(401,'Incorrect username or Password')
+    }
+
+    const result = await bcrypt.compare(password,employee.password)
+    if(!result){
+      throw new HttpException(401,'Incorrect username or Password')
+    }
+
   }
 }
