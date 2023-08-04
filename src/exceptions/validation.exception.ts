@@ -8,10 +8,6 @@ class ValidationException extends Error {
       this.status = status;
       this.errors = this.formatError(errors)
     }
-    private errorConstraints = (validationError: ValidationError) => {
-        if(validationError.constraints)
-            return Object.values(validationError.constraints)
-    }
 
     private formatError = (errors: ValidationError[]) => {
         const errorsNew = {}
@@ -19,7 +15,7 @@ class ValidationException extends Error {
             if(error.children.length > 0)
                 errorsNew[error.property] = this.formatError(error.children)
             else
-                errorsNew[error.property] = this.errorConstraints(error)
+                errorsNew[error.property] = Object.values(error.constraints)
         })
         return errorsNew
     }

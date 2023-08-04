@@ -3,20 +3,22 @@ import { EmployeeService } from "../service/employee.service";
 import { plainToInstance } from "class-transformer";
 import { CreateEmployeeDto } from "../dto/createEmployee.dto";
 import { validate } from "class-validator";
-import HttpException from "../exceptions/http.exception";
 import ValidationException from "../exceptions/validation.exception";
 import UpdateEmployeeDto from "../dto/updateEmployee.dto";
+
+import authenticate from "../middleware/authenticateMiddleware";
 
 export class EmployeeController {
   public router: express.Router;
 
   constructor(private employeeService: EmployeeService) {
     this.router = express.Router();
-    this.router.get("/", this.getAllEmployees);
-    this.router.get("/:id", this.getEmployeeByID);
-    this.router.post("/", this.createEmployee);
-    this.router.put("/:id", this.updateEmployee);
-    this.router.delete("/:id", this.deleteEmployee);
+    this.router.get("/", authenticate  ,this.getAllEmployees);
+    this.router.get("/:id", authenticate,this.getEmployeeByID);
+    this.router.post("/", authenticate,this.createEmployee);
+    this.router.put("/:id", authenticate,this.updateEmployee);
+    this.router.delete("/:id",authenticate,this.deleteEmployee);
+    this.router.post("/login", this.loginEmployee);
   }
 
   getAllEmployees = async (req: express.Request, res: express.Response) => {
@@ -45,12 +47,11 @@ export class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      const { name, email, address,password } = req.body;
+      const { name, email, address, password } = req.body;
       const createEmployeeDto = plainToInstance(CreateEmployeeDto, req.body);
       const errors = await validate(createEmployeeDto);
 
       if (errors.length > 0) {
-        console.log(errors);
         throw new ValidationException(400, errors);
       }
 
@@ -79,7 +80,6 @@ export class EmployeeController {
       const errors = await validate(updateEmployeeDto);
 
       if (errors.length > 0) {
-        console.log(errors);
         throw new ValidationException(400, errors);
       }
       const employee = await this.employeeService.updateEmployee(
@@ -98,5 +98,19 @@ export class EmployeeController {
     const id = Number(req.params.id);
     const employee = await this.employeeService.deleteEmployee(id);
     res.status(204).send(employee);
+  };
+
+  public loginEmployee = async (
+    req: express.Request,
+    res: express.Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { email, password } = req.body;
+      const token = await this.employeeService.loginEmployee(email,password)
+      res.status(200).send({data:token})
+    } catch (err) {
+      next(err);
+    }
   };
 }
