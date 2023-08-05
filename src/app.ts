@@ -1,3 +1,6 @@
+
+import * as dotenv from "dotenv";
+dotenv.config({path: __dirname + "/.env" })
 import "reflect-metadata";
 import express, { NextFunction, Request, Response } from "express";
 import loggerMiddleware from "./middleware/loggerMiddleware";
@@ -6,10 +9,10 @@ import AppDataSource from "./db/postgres.db";
 import HttpException from "./exceptions/http.exception";
 import errorMidlleware from "./middleware/errorMiddleware";
 
+
 const server = express();
 server.use(express.json());
 server.use(loggerMiddleware);
-
 server.use("/employees", employeeRoute);
 
 server.get("/", (req, res) => {

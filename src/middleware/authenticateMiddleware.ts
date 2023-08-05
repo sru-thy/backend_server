@@ -11,7 +11,7 @@ const authenticate = async (
 ) => {
   try {
     const token = getTokenFromRequestHeader(req);
-    const payload :jwtPayload = Jwt.verify(token, "ABCDE") as jwtPayload
+    const payload :jwtPayload = Jwt.verify(token, process.env.JWT_SECRET) as jwtPayload
     
     req.name =payload.name;
     req.email=payload.email;
