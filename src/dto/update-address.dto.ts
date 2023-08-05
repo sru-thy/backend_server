@@ -6,6 +6,9 @@ class UpdateAddressDto {
     line1: string;
     @IsNotEmpty()
     @IsString()
+    line2: string;
+    @IsNotEmpty()
+    @IsString()
     pincode: string;
 }
 

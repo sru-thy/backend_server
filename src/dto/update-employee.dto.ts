@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, IsObject, IsString, ValidateIf, ValidateNested } from "class-validator";
 import { Address } from "../entity/address.entity";
 import { Type } from "class-transformer";
-import UpdateAddressDto from "./updateAddress.dto";
+import UpdateAddressDto from "./update-address.dto";
 
 class UpdateEmployeeDto {
    @IsNotEmpty()

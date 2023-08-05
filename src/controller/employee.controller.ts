@@ -1,10 +1,10 @@
 import express, { NextFunction } from "express";
 import { EmployeeService } from "../service/employee.service";
 import { plainToInstance } from "class-transformer";
-import { CreateEmployeeDto } from "../dto/createEmployee.dto";
+import { CreateEmployeeDto } from "../dto/create-employee.dto";
 import { validate } from "class-validator";
 import ValidationException from "../exceptions/validation.exception";
-import UpdateEmployeeDto from "../dto/updateEmployee.dto";
+import UpdateEmployeeDto from "../dto/update-employee.dto";
 
 import authenticate from "../middleware/authenticateMiddleware";
 import authorize from "../middleware/authorizeMiddleware";
