@@ -7,6 +7,7 @@ import employeeRoute from "./Routes/employee.route";
 import AppDataSource from "./db/postgres.db";
 import errorMidlleware from "./middleware/errorMiddleware";
 import departmentRoute from "./Routes/department.route";
+import { Role } from "./utils/role.enum";
 
 
 const server = express();
@@ -19,6 +20,10 @@ server.get("/", (req, res) => {
   console.log(req.url);
   res.status(200).send("this is an employee management site");
 });
+
+server.get("/api/roles", (req,res)=>{
+  res.status(200).send(Role)
+})
 
 server.use(errorMidlleware);
 

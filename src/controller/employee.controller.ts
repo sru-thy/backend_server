@@ -8,17 +8,18 @@ import UpdateEmployeeDto from "../dto/update-employee.dto";
 
 import authenticate from "../middleware/authenticateMiddleware";
 import authorize from "../middleware/authorizeMiddleware";
+import { Role, userRoles } from "../utils/role.enum";
 
 export class EmployeeController {
   public router: express.Router;
 
   constructor(private employeeService: EmployeeService) {
     this.router = express.Router();
-    this.router.get("/", authenticate ,this.getAllEmployees);
-    this.router.get("/:id", authenticate,this.getEmployeeByID);
-    this.router.post("/", authenticate,authorize,this.createEmployee);
-    this.router.put("/:id", authenticate,this.updateEmployee);
-    this.router.delete("/:id",authenticate,this.deleteEmployee);
+    this.router.get("/", authenticate,authorize(userRoles.admin),this.getAllEmployees);
+    this.router.get("/:id", authenticate,authorize(userRoles.admin),this.getEmployeeByID);
+    this.router.post("/", authenticate,authorize(userRoles.admin),this.createEmployee);
+    this.router.put("/:id", authenticate,authorize(userRoles.admin),this.updateEmployee);
+    this.router.delete("/:id",authenticate,authorize(userRoles.admin),this.deleteEmployee);
     this.router.post("/login", this.loginEmployee);
   }
 

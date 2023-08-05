@@ -20,7 +20,7 @@ class Employee extends AbstractEntity {
   @Column()
   password: string;
 
-  @Column({default:Role.DEVELOPER })
+  @Column({default:Role.USER})
   role:Role
 }
 

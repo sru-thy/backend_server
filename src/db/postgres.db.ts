@@ -20,15 +20,4 @@ const AppDataSource = new DataSource({
     namingStrategy: new SnakeNamingStrategy(),
   });
 
-
-
-  AppDataSource
-    .initialize()
-    .then(() => {
-        console.log(`Data Source has been initialized`);
-    })
-    .catch((err) => {
-        console.error(`Data Source initialization error`, err);
-    })
-
   export default AppDataSource
