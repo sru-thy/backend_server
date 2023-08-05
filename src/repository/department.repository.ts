@@ -20,9 +20,9 @@ export class DepartmentRepository {
     return this.depRepository.save(updateEmployee);
   }
 
-  async deleteEmployee(id: number): Promise<Department> {
+  async deleteDepartment(id: number): Promise<Department> {
     const deptodelete = await this.findDepartment(id);
     return this.depRepository.softRemove(deptodelete);
   }
-  
+
 }
