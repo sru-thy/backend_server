@@ -1,20 +1,34 @@
+import * as dotenv from "dotenv";
+dotenv.config({path: "dist/.env" });
 import { DataSource } from "typeorm";
+
+
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 const mpath = 'dist/db/migrations/*.js'
 const epath = 'dist/entity/*.js'
 
+const port = Number(process.env.POSTGRES_PORT);
+console.log(port)
+
 const AppDataSource = new DataSource({
     type: "postgres",
-    host: process.env.POSTGRES_HOST,
-    port: Number(process.env.POSTGRES_PORT),
-    username: process.env.POSTGRES_USERNAME,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DATABASE,
+    url: process.env.DATABASE_URL,
     entities: [epath],
     migrations: [mpath],
     synchronize: false,
     logging: true,
     namingStrategy: new SnakeNamingStrategy(),
   });
+
+
+
+  AppDataSource
+    .initialize()
+    .then(() => {
+        console.log(`Data Source has been initialized`);
+    })
+    .catch((err) => {
+        console.error(`Data Source initialization error`, err);
+    })
 
   export default AppDataSource

@@ -1,12 +1,12 @@
-
+import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
-dotenv.config({path: __dirname + "/.env" })
+
+dotenv.config({path: __dirname + "/.env" });
 import "reflect-metadata";
-import express, { NextFunction, Request, Response } from "express";
+import express from "express";
 import loggerMiddleware from "./middleware/loggerMiddleware";
 import employeeRoute from "./Routes/employee.route";
 import AppDataSource from "./db/postgres.db";
-import HttpException from "./exceptions/http.exception";
 import errorMidlleware from "./middleware/errorMiddleware";
 
 
