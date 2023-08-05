@@ -84,7 +84,7 @@ export class EmployeeService {
       role: employee.role,
     };
 
-    const token = Jwt.sign(payload,"ABCDE", {
+    const token = Jwt.sign(payload,process.env.JWT_SECRET, {
       expiresIn: "1h"
     })
     
