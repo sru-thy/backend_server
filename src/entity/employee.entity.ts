@@ -9,19 +9,19 @@ class Employee extends AbstractEntity {
   @Column()
   name: string;
   @Column()
-  email: string;
-  @Column({ nullable: true })
-  age: number;
-  @OneToOne(() => Address, (address) => address.employee, { cascade: true })
-  address: Address;
-  @ManyToOne(()=>Department)
-  department : Department
-
+  username: string;
   @Column()
   password: string;
-
-  @Column({default:Role.USER})
-  role:Role
+  @Column()
+  joiningDate: string;
+  @Column()
+  experience: number;
+  @Column({ default: Role.USER })
+  role: Role;
+  @OneToOne(() => Address, (address) => address.employee, { cascade: true })
+  address: Address;
+  @ManyToOne(() => Department, { cascade: true })
+  department: Department;
 }
 
 export default Employee;

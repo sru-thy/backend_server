@@ -14,7 +14,7 @@ const authenticate = async (
     const payload :jwtPayload = Jwt.verify(token, process.env.JWT_SECRET) as jwtPayload
     
     req.name =payload.name;
-    req.email=payload.email;
+    req.username=payload.username;
     req.role=payload.role;
     next();
   } catch (err) {

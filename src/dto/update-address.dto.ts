@@ -7,6 +7,11 @@ class UpdateAddressDto {
     @IsNotEmpty()
     @IsString()
     line2: string;
+    @IsString()
+    state: string;
+    @IsNotEmpty()
+    @IsString()
+    country: string;
     @IsNotEmpty()
     @IsString()
     pincode: string;

@@ -2,6 +2,7 @@ import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
+  IsNumber,
   IsString,
   ValidateNested,
 } from "class-validator";
@@ -15,8 +16,8 @@ export class CreateEmployeeDto {
   @IsString()
   name: string;
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
+  @IsString()
+  username: string;
   @IsNotEmpty()
   @ValidateNested({ each: true })
   @Type(() => CreateAddressDto)
@@ -27,4 +28,11 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   @IsEnum(Role)
   role: Role;
+  @IsNotEmpty()
+  @IsString()
+  joiningDate : string;
+  @IsNotEmpty()
+  @IsNumber()
+  experience : number;
+  
 }

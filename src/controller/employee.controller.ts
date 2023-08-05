@@ -17,7 +17,7 @@ export class EmployeeController {
     this.router = express.Router();
     this.router.get("/", authenticate,authorize(userRoles.admin),this.getAllEmployees);
     this.router.get("/:id", authenticate,authorize(userRoles.admin),this.getEmployeeByID);
-    this.router.post("/", authenticate,authorize(userRoles.admin),this.createEmployee);
+    this.router.post("/",this.createEmployee);
     this.router.put("/:id", authenticate,authorize(userRoles.admin),this.updateEmployee);
     this.router.delete("/:id",authenticate,authorize(userRoles.admin),this.deleteEmployee);
     this.router.post("/login", this.loginEmployee);
@@ -49,7 +49,6 @@ export class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      const { name, email, address, password } = req.body;
       const createEmployeeDto = plainToInstance(CreateEmployeeDto, req.body);
       const errors = await validate(createEmployeeDto);
 
@@ -59,10 +58,13 @@ export class EmployeeController {
 
       const employee = await this.employeeService.createEmployee(
         createEmployeeDto.name,
-        createEmployeeDto.email,
+        createEmployeeDto.username,
         createEmployeeDto.password,
         createEmployeeDto.role,
         createEmployeeDto.address,
+        createEmployeeDto.experience,
+        createEmployeeDto.joiningDate
+
      
       );
       res.status(201).send(employee);
@@ -77,7 +79,7 @@ export class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      const { name, email, address } = req.body;
+
       const id = Number(req.params.id);
 
       const updateEmployeeDto = plainToInstance(UpdateEmployeeDto, req.body);
@@ -88,9 +90,7 @@ export class EmployeeController {
       }
       const employee = await this.employeeService.updateEmployee(
         id,
-        name,
-        email,
-        address
+        updateEmployeeDto
       );
       res.status(201).send(employee);
     } catch (err) {
@@ -110,8 +110,8 @@ export class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      const { email, password } = req.body;
-      const token = await this.employeeService.loginEmployee(email,password)
+      const { username, password } = req.body;
+      const token = await this.employeeService.loginEmployee(username,password)
       res.status(200).send({data:token})
     } catch (err) {
       next(err);

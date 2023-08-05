@@ -1,8 +1,8 @@
 import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 export class AbstractEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn("uuid")
+    id: string;
     @CreateDateColumn()
     createdAt: Date;
     @UpdateDateColumn()
