@@ -1,11 +1,11 @@
 import { EmployeeController } from "../controller/employee.controller";
 import AppDataSource from "../db/postgres.db";
+import Department from "../entity/department.entity";
 import Employee from "../entity/employee.entity";
 import { EmployeeRepository } from "../repository/employee.repository";
 import { EmployeeService } from "../service/employee.service";
 
 const employeeRepository = new EmployeeRepository(
-
     AppDataSource.getRepository(Employee)
 );
 
