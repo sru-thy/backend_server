@@ -12,8 +12,8 @@ import departmentRoute from "./Routes/department.route";
 const server = express();
 server.use(express.json());
 server.use(loggerMiddleware);
-server.use("/employees", employeeRoute);
-server.use("/departments", departmentRoute);
+server.use("/api/employees", employeeRoute);
+server.use("/api/departments", departmentRoute);
 
 server.get("/", (req, res) => {
   console.log(req.url);
