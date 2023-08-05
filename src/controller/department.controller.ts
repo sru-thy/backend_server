@@ -94,6 +94,6 @@ export class DepartmentController {
   deleteDepartment = async (req: express.Request, res: express.Response) => {
     const id = Number(req.params.id);
     const employee = await this.departmentService.deleteDepartment(id);
-    res.status(204).send(employee);
+    res.status(201).send(employee);
   };
 }
