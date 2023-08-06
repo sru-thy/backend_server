@@ -1,7 +1,5 @@
 import { DataSource, Repository, UpdateResult } from "typeorm";
-import AppDataSource from "../db/postgres.db";
 import Employee from "../entity/employee.entity";
-import { Address } from "../entity/address.entity";
 import UpdateEmployeeDto from "../dto/update-employee.dto";
 
 export class EmployeeRepository {
@@ -15,7 +13,7 @@ export class EmployeeRepository {
     });
   }
 
-  async findOneBy(filter :Partial<Employee>): Promise<Employee> {
+  async findOneBy(filter: Partial<Employee>): Promise<Employee> {
     return await this.empRepository.findOne({
       where: filter,
       relations: {
@@ -28,14 +26,22 @@ export class EmployeeRepository {
     return this.empRepository.save(newEmployee);
   }
 
-  updateEmployee(id:number,updateEmployeeDto:UpdateEmployeeDto): Promise<UpdateResult> {
-    return this.empRepository.update({id: id}, updateEmployeeDto);
+  async updateEmployee(
+    id: string,
+    updateEmployeeDto: any
+  ): Promise<Employee> {
+
+ 
+    const partialUserEntity = {
+      id: id,
+      ...updateEmployeeDto,
+    };
+    const user = await this.empRepository.preload(partialUserEntity);
+    return this.empRepository.save(user);
   }
 
-  async deleteEmployee(id: number): Promise<Employee> {
-    const employeetodelete = await this.findOneBy({id:id});
+  async deleteEmployee(id: string): Promise<Employee> {
+    const employeetodelete = await this.findOneBy({ id: id });
     return this.empRepository.softRemove(employeetodelete);
   }
-
-
 }

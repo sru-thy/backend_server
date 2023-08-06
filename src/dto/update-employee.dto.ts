@@ -2,6 +2,7 @@ import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
+  IsNumber,
   IsObject,
   IsOptional,
   IsString,
@@ -42,8 +43,12 @@ class UpdateEmployeeDto {
   joiningDate : string;
   @IsOptional()
   @IsNotEmpty()
-  @IsString()
+  @IsNumber()
   experience : number;
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  departmentId : string;
 }
 
 export default UpdateEmployeeDto;

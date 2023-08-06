@@ -9,6 +9,7 @@ import { Role } from "../utils/role.enum";
 import { jwtPayload } from "../utils/jwtPayload.type";
 import UpdateEmployeeDto from "../dto/update-employee.dto";
 import Department from "../entity/department.entity";
+import { UpdateResult } from "typeorm";
 
 export class EmployeeService {
   constructor(private empRepository: EmployeeRepository) {}
@@ -17,7 +18,7 @@ export class EmployeeService {
     return this.empRepository.find();
   }
 
-  async getEmployeeByID(id: number): Promise<any> {
+  async getEmployeeByID(id: string): Promise<any> {
     const employee = await this.empRepository.findOneBy({ id: id });
     console.log(employee);
     if (!employee) {
@@ -25,24 +26,25 @@ export class EmployeeService {
     }
     return employee;
   }
+
   async createEmployee(
     name: string,
     username: string,
     password: string,
     role: Role,
     address: any,
-    experience:number,
-    joiningDate:string,
-    department : string
+    experience: number,
+    joiningDate: string,
+    department: string
   ): Promise<Employee> {
     const newEmployee = new Employee();
     newEmployee.username = username;
     newEmployee.name = name;
     newEmployee.password = await bcrypt.hash(password, 10);
     newEmployee.role = role;
-    newEmployee.experience= experience;
-    newEmployee.joiningDate=joiningDate
-    newEmployee.department = <any>Number(department) // typesafe?
+    newEmployee.experience = experience;
+    newEmployee.joiningDate = joiningDate;
+    newEmployee.department = <any>Number(department); // typesafe?
 
     const newAddress = new Address();
     newAddress.line1 = address.line1;
@@ -56,22 +58,22 @@ export class EmployeeService {
   }
 
   async updateEmployee(
-    id: number,
-updateEmployeeDto:UpdateEmployeeDto
+    id: string,
+    updateEmployeeDto: UpdateEmployeeDto
   ): Promise<Employee> {
     // const employeetoupdate = await this.empRepository.findOneBy({ id: id });
-    // employeetoupdate.username = username;
-    // employeetoupdate.name = name;
-    // employeetoupdate.address.line1 = address.line1;
-    // employeetoupdate.address.line2 = address.line2;
-    // employeetoupdate.address.pincode = address.pincode;
-  
-    const updated = await this.empRepository.updateEmployee(id,updateEmployeeDto);
-    return await this.empRepository.findOneBy({ id: id });
 
+    if(updateEmployeeDto.departmentId){
+      const {departmentId, ...otherProps} = updateEmployeeDto;
+    
+      var newupdateEmployeeDto = {department: departmentId, ...otherProps};
+      
+    }
+
+    return await this.empRepository.updateEmployee(id, newupdateEmployeeDto);
   }
 
-  deleteEmployee(id: number): Promise<Employee> {
+  deleteEmployee(id: string): Promise<Employee> {
     return this.empRepository.deleteEmployee(id);
   }
 
@@ -86,17 +88,16 @@ updateEmployeeDto:UpdateEmployeeDto
       throw new HttpException(401, "Incorrect username or Password");
     }
 
-    const payload : jwtPayload = {
+    const payload: jwtPayload = {
       name: employee.name,
       username: employee.username,
       role: employee.role,
     };
 
-    const token = Jwt.sign(payload,process.env.JWT_SECRET, {
-      expiresIn: "24h"
-    })
-    
-    return {token:token}
+    const token = Jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "24h",
+    });
 
+    return { token: token, employeeDetails: employee };
   };
 }

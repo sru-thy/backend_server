@@ -15,11 +15,31 @@ export class EmployeeController {
 
   constructor(private employeeService: EmployeeService) {
     this.router = express.Router();
-    this.router.get("/", authenticate,authorize(userRoles.admin),this.getAllEmployees);
-    this.router.get("/:id", authenticate,authorize(userRoles.admin),this.getEmployeeByID);
-    this.router.post("/",this.createEmployee);
-    this.router.put("/:id", authenticate,authorize(userRoles.admin),this.updateEmployee);
-    this.router.delete("/:id",authenticate,authorize(userRoles.admin),this.deleteEmployee);
+    this.router.get(
+      "/",
+      authenticate,
+      authorize(userRoles.admin),
+      this.getAllEmployees
+    );
+    this.router.get(
+      "/:id",
+      authenticate,
+      authorize(userRoles.admin),
+      this.getEmployeeByID
+    );
+    this.router.post("/", this.createEmployee);
+    this.router.patch(
+      "/:id",
+      authenticate,
+      authorize(userRoles.admin),
+      this.updateEmployee
+    );
+    this.router.delete(
+      "/:id",
+      authenticate,
+      authorize(userRoles.admin),
+      this.deleteEmployee
+    );
     this.router.post("/login", this.loginEmployee);
   }
 
@@ -35,7 +55,7 @@ export class EmployeeController {
   ) => {
     try {
       const employee = await this.employeeService.getEmployeeByID(
-        Number(req.params.id)
+        req.params.id
       );
       res.status(200).send(employee);
     } catch (error) {
@@ -78,8 +98,8 @@ export class EmployeeController {
     next: NextFunction
   ) => {
     try {
-
-      const id = Number(req.params.id);
+      const id = req.params.id;
+      await this.employeeService.getEmployeeByID(req.params.id);
 
       const updateEmployeeDto = plainToInstance(UpdateEmployeeDto, req.body);
       const errors = await validate(updateEmployeeDto);
@@ -98,7 +118,7 @@ export class EmployeeController {
   };
 
   deleteEmployee = async (req: express.Request, res: express.Response) => {
-    const id = Number(req.params.id);
+    const id = req.params.id;
     const employee = await this.employeeService.deleteEmployee(id);
     res.status(204).send(employee);
   };
@@ -110,8 +130,8 @@ export class EmployeeController {
   ) => {
     try {
       const { username, password } = req.body;
-      const token = await this.employeeService.loginEmployee(username,password)
-      res.status(200).send({data:token})
+      const data = await this.employeeService.loginEmployee(username, password);
+      res.status(200).send({ data: data });
     } catch (err) {
       next(err);
     }

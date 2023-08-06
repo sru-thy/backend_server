@@ -16,6 +16,7 @@ class Department{
   deletedAt: Date;
   @OneToMany(()=>Employee,(employee)=>employee.department,{cascade:true})
   employees:Employee[];
+
 }
 
 export default Department;

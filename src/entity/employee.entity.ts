@@ -18,7 +18,7 @@ class Employee extends AbstractEntity {
   experience: number;
   @Column({ default: Role.USER })
   role: Role;
-  @OneToOne(() => Address, (address) => address.employee, { cascade: true })
+  @OneToOne(() => Address, (address) => address.employee, { cascade: true, eager:true})
   address: Address;
   @ManyToOne(() => Department)
   department: Department;
