@@ -8,7 +8,6 @@ const mpath = 'dist/db/migrations/*.js'
 const epath = 'dist/entity/*.js'
 
 const port = Number(process.env.POSTGRES_PORT);
-console.log(port)
 
 const AppDataSource = new DataSource({
     type: "postgres",

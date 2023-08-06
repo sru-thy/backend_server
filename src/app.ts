@@ -8,6 +8,7 @@ import AppDataSource from "./db/postgres.db";
 import errorMidlleware from "./middleware/errorMiddleware";
 import departmentRoute from "./Routes/department.route";
 import { Role } from "./utils/role.enum";
+import logger from "./utils/winstonLogger";
 
 
 const server = express();
@@ -17,7 +18,7 @@ server.use("/api/employees", employeeRoute);
 server.use("/api/departments", departmentRoute);
 
 server.get("/", (req, res) => {
-  console.log(req.url);
+  logger.info("GET on /")
   res.status(200).send("this is an employee management site");
 });
 
@@ -30,6 +31,6 @@ server.use(errorMidlleware);
 (async () => {
   await AppDataSource.initialize();
   server.listen(3000, () => {
-    console.log("server is listening to 3000");
+    logger.info("server is listening to 3000");
   });
 })();

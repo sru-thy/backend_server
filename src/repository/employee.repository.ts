@@ -54,7 +54,6 @@ export class EmployeeRepository {
 
   async generateIDForAddress(id): Promise<Address> {
     const employee = await this.findOneBy({ id: id });
-    console.log(employee.address);
     return employee.address;
   }
 }

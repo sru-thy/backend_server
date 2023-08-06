@@ -1,0 +1,5 @@
+[2023-08-06T22:13:19.966Z] WinstonService info: server is listening to 3000
+[2023-08-06T22:13:31.384Z] WinstonService info: Mon Aug 07 2023 03:43:31 GMT+0530 (India Standard Time) : /api/roles : GET
+[2023-08-06T22:14:03.287Z] WinstonService info: Mon Aug 07 2023 03:44:03 GMT+0530 (India Standard Time) : /api/employees : POST
+[2023-08-06T22:18:37.174Z] WinstonService info: server is listening to 3000
+[2023-08-06T22:21:30.101Z] WinstonService [32minfo[39m: server is listening to 3000

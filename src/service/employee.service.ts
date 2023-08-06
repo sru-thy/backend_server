@@ -20,7 +20,6 @@ export class EmployeeService {
 
   async getEmployeeByID(id: string): Promise<any> {
     const employee = await this.empRepository.findOneBy({ id: id });
-    console.log(employee);
     if (!employee) {
       throw new HttpException(404, "employee not found");
     }

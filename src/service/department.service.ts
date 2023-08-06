@@ -17,7 +17,6 @@ export class DepartmentService {
 
   async getDepartmentByID(id: number): Promise<any> {
     const department = await this.departmentRepository.findDepartment(id);
-    console.log(department);
     if (!department) {
       throw new HttpException(404, "Department not found");
     }
