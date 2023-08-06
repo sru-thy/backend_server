@@ -18,8 +18,7 @@ export class EmployeeRepository {
     return await this.empRepository.findOne({
       where: filter,
       relations: {
-        address: true,
-        department: true,
+        address: true
       },
     });
   }
