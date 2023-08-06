@@ -8,6 +8,7 @@ import Jwt from "jsonwebtoken";
 import { Role } from "../utils/role.enum";
 import { jwtPayload } from "../utils/jwtPayload.type";
 import UpdateEmployeeDto from "../dto/update-employee.dto";
+import Department from "../entity/department.entity";
 
 export class EmployeeService {
   constructor(private empRepository: EmployeeRepository) {}
@@ -31,7 +32,8 @@ export class EmployeeService {
     role: Role,
     address: any,
     experience:number,
-    joiningDate:string
+    joiningDate:string,
+    department : string
   ): Promise<Employee> {
     const newEmployee = new Employee();
     newEmployee.username = username;
@@ -40,6 +42,7 @@ export class EmployeeService {
     newEmployee.role = role;
     newEmployee.experience= experience;
     newEmployee.joiningDate=joiningDate
+    newEmployee.department = <any>Number(department) // typesafe?
 
     const newAddress = new Address();
     newAddress.line1 = address.line1;
@@ -47,7 +50,6 @@ export class EmployeeService {
     newAddress.state = address.state;
     newAddress.country = address.country;
     newAddress.pincode = address.pincode;
-//department_id
     newEmployee.address = newAddress;
 
     return this.empRepository.createEmployee(newEmployee);

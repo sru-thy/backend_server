@@ -63,9 +63,8 @@ export class EmployeeController {
         createEmployeeDto.role,
         createEmployeeDto.address,
         createEmployeeDto.experience,
-        createEmployeeDto.joiningDate
-
-     
+        createEmployeeDto.joiningDate,
+        createEmployeeDto.departmentId
       );
       res.status(201).send(employee);
     } catch (err) {

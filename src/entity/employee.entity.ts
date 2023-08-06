@@ -1,4 +1,4 @@
-import { Entity, Column, OneToOne, ManyToOne } from "typeorm";
+import { Entity, Column, OneToOne, ManyToOne, JoinColumn } from "typeorm";
 import { Address } from "./address.entity";
 import { AbstractEntity } from "./abstract-entity";
 import { Role } from "../utils/role.enum";
@@ -20,7 +20,7 @@ class Employee extends AbstractEntity {
   role: Role;
   @OneToOne(() => Address, (address) => address.employee, { cascade: true })
   address: Address;
-  @ManyToOne(() => Department, { cascade: true })
+  @ManyToOne(() => Department)
   department: Department;
 }
 

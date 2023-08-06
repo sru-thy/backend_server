@@ -34,5 +34,8 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   @IsNumber()
   experience : number;
+  @IsNotEmpty()
+  @IsString()
+  departmentId : string;
   
 }
