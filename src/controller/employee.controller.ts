@@ -9,6 +9,7 @@ import UpdateEmployeeDto from "../dto/update-employee.dto";
 import authenticate from "../middleware/authenticateMiddleware";
 import authorize from "../middleware/authorizeMiddleware";
 import { Role, userRoles } from "../utils/role.enum";
+import jsonResponse from "../utils/response";
 
 export class EmployeeController {
   public router: express.Router;
@@ -45,7 +46,13 @@ export class EmployeeController {
 
   getAllEmployees = async (req: express.Request, res: express.Response) => {
     const employee = await this.employeeService.getAllEmployees();
-    res.status(200).send(employee);
+    res.status(200).send(
+      new jsonResponse(employee, "OK", null, {
+        length: employee.length,
+        took: new Date().getTime(),
+        total: employee.length,
+      })
+    );
   };
 
   getEmployeeByID = async (
@@ -57,7 +64,13 @@ export class EmployeeController {
       const employee = await this.employeeService.getEmployeeByID(
         req.params.id
       );
-      res.status(200).send(employee);
+      res.status(200).send(
+        new jsonResponse(employee, "OK", null, {
+          length: 1,
+          took: new Date().getTime(),
+          total: 1,
+        })
+      );
     } catch (error) {
       next(error);
     }
@@ -86,7 +99,13 @@ export class EmployeeController {
         createEmployeeDto.joiningDate,
         createEmployeeDto.departmentId
       );
-      res.status(201).send(employee);
+      res.status(201).send(
+        new jsonResponse(employee, "OK", null, {
+          length: 1,
+          took: new Date().getTime(),
+          total: 1,
+        })
+      );
     } catch (err) {
       next(err);
     }
@@ -111,7 +130,13 @@ export class EmployeeController {
         id,
         updateEmployeeDto
       );
-      res.status(201).send(employee);
+      res.status(201).send(
+        new jsonResponse(employee, "OK", null, {
+          length: 1,
+          took: new Date().getTime(),
+          total: 1,
+        })
+      );
     } catch (err) {
       next(err);
     }
@@ -131,7 +156,13 @@ export class EmployeeController {
     try {
       const { username, password } = req.body;
       const data = await this.employeeService.loginEmployee(username, password);
-      res.status(200).send({ data: data });
+      res.status(200).send(
+        new jsonResponse(data, "OK", null, {
+          length: 1,
+          took: new Date().getTime(),
+          total: 1,
+        })
+      );
     } catch (err) {
       next(err);
     }

@@ -6,17 +6,46 @@ import ValidationException from "../exceptions/validation.exception";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { UpdateDepartmentDto } from "../dto/update-department.dto";
+import authenticate from "../middleware/authenticateMiddleware";
+import authorize from "../middleware/authorizeMiddleware";
+import { userRoles } from "../utils/role.enum";
+import jsonResponse from "../utils/response";
 
 export class DepartmentController {
   public router: Router;
 
   constructor(private departmentService: DepartmentService) {
     this.router = express.Router();
-    this.router.post("/", this.createDepartment);
-    this.router.put("/:id",this.updateDepartment);
-    this.router.delete("/:id",this.deleteDepartment);
-    this.router.get("/", this.getAllDepartments);
-    this.router.get("/:id", this.getDepartmentByID);
+    this.router.post(
+      "/",
+      authenticate,
+      authorize(userRoles.admin),
+      this.createDepartment
+    );
+    this.router.put(
+      "/:id",
+      authenticate,
+      authorize(userRoles.admin),
+      this.updateDepartment
+    );
+    this.router.delete(
+      "/:id",
+      authenticate,
+      authorize(userRoles.admin),
+      this.deleteDepartment
+    );
+    this.router.get(
+      "/",
+      authenticate,
+      authorize(userRoles.admin),
+      this.getAllDepartments
+    );
+    this.router.get(
+      "/:id",
+      authenticate,
+      authorize(userRoles.admin),
+      this.getDepartmentByID
+    );
   }
 
   createDepartment = async (
@@ -25,6 +54,7 @@ export class DepartmentController {
     next: NextFunction
   ) => {
     try {
+      const start = new Date().getTime()
       const createDepartmentDto = plainToInstance(
         CreateDepartmentDto,
         req.body
@@ -34,18 +64,30 @@ export class DepartmentController {
       if (errors.length > 0) {
         throw new ValidationException(400, errors);
       }
-      const employee = await this.departmentService.createDepartment(
+      const department = await this.departmentService.createDepartment(
         createDepartmentDto.name
       );
-      res.status(201).send(employee);
+      res.status(201).send(
+        new jsonResponse(department, "OK", null, {
+          length: 1,
+          took: new Date().getTime() - start ,
+          total: 1,
+        })
+      );
     } catch (err) {
       next(err);
     }
   };
 
   getAllDepartments = async (req: express.Request, res: express.Response) => {
-    const employee = await this.departmentService.getAllDepartments();
-    res.status(200).send(employee);
+    const department = await this.departmentService.getAllDepartments();
+    res.status(200).send(
+      new jsonResponse(department, "OK", null, {
+        length: department.length,
+        took: new Date().getTime(),
+        total: department.length,
+      })
+    );
   };
 
   getDepartmentByID = async (
@@ -54,10 +96,16 @@ export class DepartmentController {
     next: NextFunction
   ) => {
     try {
-      const employee = await this.departmentService.getDepartmentByID(
+      const department = await this.departmentService.getDepartmentByID(
         Number(req.params.id)
       );
-      res.status(200).send(employee);
+      res.status(200).send(
+        new jsonResponse(department, "OK", null, {
+          length: department.length,
+          took: new Date().getTime(),
+          total: department.length,
+        })
+      );
     } catch (error) {
       next(error);
     }
@@ -85,7 +133,13 @@ export class DepartmentController {
         name,
         id
       );
-      res.status(201).send(department);
+      res.status(201).send(
+        new jsonResponse(department, "OK", null, {
+          length: 1,
+          took: new Date().getTime(),
+          total: 1,
+        })
+      );
     } catch (err) {
       next(err);
     }
@@ -93,7 +147,7 @@ export class DepartmentController {
 
   deleteDepartment = async (req: express.Request, res: express.Response) => {
     const id = Number(req.params.id);
-    const employee = await this.departmentService.deleteDepartment(id);
-    res.status(201).send(employee);
+    const department = await this.departmentService.deleteDepartment(id);
+    res.status(201).send(department);
   };
 }
