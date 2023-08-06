@@ -63,12 +63,9 @@ export class EmployeeService {
   ): Promise<Employee> {
     // const employeetoupdate = await this.empRepository.findOneBy({ id: id });
 
-    if(updateEmployeeDto.departmentId){
-      const {departmentId, ...otherProps} = updateEmployeeDto;
-    
-      var newupdateEmployeeDto = {department: departmentId, ...otherProps};
-      
-    }
+    const { departmentId, ...otherProps } = updateEmployeeDto;
+
+    const newupdateEmployeeDto = { department: departmentId, ...otherProps };
 
     return await this.empRepository.updateEmployee(id, newupdateEmployeeDto);
   }
