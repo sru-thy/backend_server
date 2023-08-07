@@ -49,7 +49,7 @@ export class EmployeeController {
     res.status(200).send(
       new jsonResponse(employee, "OK", null, {
         length: employee.length,
-        took: new Date().getTime(),
+        took: new Date().getTime() - req.body.time,
         total: employee.length,
       })
     );
@@ -67,7 +67,7 @@ export class EmployeeController {
       res.status(200).send(
         new jsonResponse(employee, "OK", null, {
           length: 1,
-          took: new Date().getTime(),
+          took: new Date().getTime()- req.body.time,
           total: 1,
         })
       );
@@ -102,7 +102,7 @@ export class EmployeeController {
       res.status(201).send(
         new jsonResponse(employee, "OK", null, {
           length: 1,
-          took: new Date().getTime(),
+          took: new Date().getTime()- req.body.time,
           total: 1,
         })
       );
@@ -133,7 +133,7 @@ export class EmployeeController {
       res.status(201).send(
         new jsonResponse(employee, "OK", null, {
           length: 1,
-          took: new Date().getTime(),
+          took: new Date().getTime() - req.body.time,
           total: 1,
         })
       );
@@ -159,7 +159,7 @@ export class EmployeeController {
       res.status(200).send(
         new jsonResponse(data, "OK", null, {
           length: 1,
-          took: new Date().getTime(),
+          took: new Date().getTime() - req.body.time,
           total: 1,
         })
       );

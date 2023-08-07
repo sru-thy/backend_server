@@ -54,7 +54,6 @@ export class DepartmentController {
     next: NextFunction
   ) => {
     try {
-      const start = new Date().getTime()
       const createDepartmentDto = plainToInstance(
         CreateDepartmentDto,
         req.body
@@ -70,7 +69,7 @@ export class DepartmentController {
       res.status(201).send(
         new jsonResponse(department, "OK", null, {
           length: 1,
-          took: new Date().getTime() - start ,
+          took: new Date().getTime() - req.body.time,
           total: 1,
         })
       );
@@ -84,7 +83,7 @@ export class DepartmentController {
     res.status(200).send(
       new jsonResponse(department, "OK", null, {
         length: department.length,
-        took: new Date().getTime(),
+        took: new Date().getTime() - req.body.time,
         total: department.length,
       })
     );
@@ -102,7 +101,7 @@ export class DepartmentController {
       res.status(200).send(
         new jsonResponse(department, "OK", null, {
           length: department.length,
-          took: new Date().getTime(),
+          took: new Date().getTime() - req.body.time,
           total: department.length,
         })
       );
@@ -136,7 +135,7 @@ export class DepartmentController {
       res.status(201).send(
         new jsonResponse(department, "OK", null, {
           length: 1,
-          took: new Date().getTime(),
+          took: new Date().getTime() - req.body.time,
           total: 1,
         })
       );
