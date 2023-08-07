@@ -59,7 +59,6 @@ describe("employee service tests", () => {
     const exception = new HttpException(404, `Employees found`);
     const mockedFunction = jest.fn();
     when(mockedFunction)
-      .calledWith()
       .mockResolvedValue({
         id: 1,
         createdAt: "2023-08-06T23:53:42.472Z",

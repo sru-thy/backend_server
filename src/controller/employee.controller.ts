@@ -50,12 +50,14 @@ export class EmployeeController {
   }
 
   getAllEmployees = async (req: express.Request, res: express.Response) => {
-    const employee = await this.employeeService.getAllEmployees();
+    const skip = Number(req.query.skip) || 0;
+    const take = Number(req.query.take) || 10;
+    const employee = await this.employeeService.getAllEmployees(skip,take);
     res.status(200).send(
       new jsonResponse(employee, "OK", null, {
-        length: employee.length,
+        length: employee[0].length,
         took: new Date().getTime() - req.body.time,
-        total: employee.length,
+        total: employee[1],
       })
     );
   };

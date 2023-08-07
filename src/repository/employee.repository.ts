@@ -6,12 +6,16 @@ import { Address } from "../entity/address.entity";
 export class EmployeeRepository {
   constructor(private empRepository: Repository<Employee>) {}
 
-  find(): Promise<Employee[]> {
-    return this.empRepository.find({
+ async  find(skip:number =0,take:number=10): Promise<[Employee[], number]> {
+      
+   const result = await this.empRepository.findAndCount({
+      skip: skip,
+      take : take,
       relations: {
         address: true,
       },
     });
+    return result
   }
 
   async findOneBy(filter: Partial<Employee>): Promise<Employee> {

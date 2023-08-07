@@ -6,6 +6,7 @@ import Employee from "./employee.entity";
 class Department extends AbstractEntity{ 
   @Column()
   name: string;
+  
   @OneToMany(()=>Employee,(employee)=>employee.department,{cascade:true})
   employees:Employee[];
 

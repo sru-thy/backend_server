@@ -1,4 +1,4 @@
-import { Entity, Column, OneToOne, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, OneToOne, ManyToOne, JoinColumn, AfterRemove } from "typeorm";
 import { Address } from "./address.entity";
 import { AbstractEntity } from "./abstract-entity";
 import { Role } from "../utils/role.enum";

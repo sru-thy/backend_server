@@ -14,8 +14,8 @@ import { UpdateResult } from "typeorm";
 export class EmployeeService {
   constructor(private empRepository: EmployeeRepository) {}
 
-  getAllEmployees(): Promise<Employee[]> {
-    return this.empRepository.find();
+  getAllEmployees(skip:number =0 ,take:number =10): Promise<[Employee[], number]> {
+    return this.empRepository.find(skip,take);
   }
 
   async getEmployeeByID(id: number): Promise<any> {
