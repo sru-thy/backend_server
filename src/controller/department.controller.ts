@@ -5,7 +5,7 @@ import { CreateDepartmentDto } from "../dto/create-department.dto";
 import ValidationException from "../exceptions/validation.exception";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
-import { UpdateDepartmentDto } from "../dto/update-department.dto";
+import UpdateDepartmentDto from "../dto/update-department.dto";
 import authenticate from "../middleware/authenticateMiddleware";
 import authorize from "../middleware/authorizeMiddleware";
 import { userRoles } from "../utils/role.enum";

@@ -27,7 +27,7 @@ export class EmployeeRepository {
     return this.empRepository.save(newEmployee);
   }
 
-  async updateEmployee(id: string, updateEmployeeDto: any): Promise<Employee> {
+  async updateEmployee(id: number, updateEmployeeDto: any): Promise<Employee> {
     const partialEmployeeEntity = {
       id: id,
       ...updateEmployeeDto,
@@ -42,13 +42,9 @@ export class EmployeeRepository {
     const employee = await this.empRepository.preload(partialEmployeeEntity);
 
     return this.empRepository.save(employee);
-
-    // const user = this.empRepository.update(id,{...updateEmployeeDto});
-    // return this.findOneBy({id:id})
   }
 
-  async deleteEmployee(id: string): Promise<Employee> {
-    const employeetodelete = await this.findOneBy({ id: id });
+  async deleteEmployee(employeetodelete : Employee): Promise<Employee> {
     return this.empRepository.softRemove(employeetodelete);
   }
 

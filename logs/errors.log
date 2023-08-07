@@ -3,3 +3,42 @@
 [2023-08-06T22:14:03.287Z] WinstonService info: Mon Aug 07 2023 03:44:03 GMT+0530 (India Standard Time) : /api/employees : POST
 [2023-08-06T22:18:37.174Z] WinstonService info: server is listening to 3000
 [2023-08-06T22:21:30.101Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-06T23:04:10.698Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-06T23:04:24.419Z] WinstonService [32minfo[39m: Mon Aug 07 2023 04:34:24 GMT+0530 (India Standard Time) : /api/departments : POST
+[2023-08-06T23:19:46.314Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-06T23:20:00.626Z] WinstonService [32minfo[39m: Mon Aug 07 2023 04:50:00 GMT+0530 (India Standard Time) : /api/departments : POST
+[2023-08-07T04:50:40.276Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-07T04:51:27.504Z] WinstonService [32minfo[39m: Mon Aug 07 2023 10:21:27 GMT+0530 (India Standard Time) : /api/departments : POST
+[2023-08-07T05:23:20.786Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-07T05:23:42.397Z] WinstonService [32minfo[39m: Mon Aug 07 2023 10:53:42 GMT+0530 (India Standard Time) : /api/employees : POST
+[2023-08-07T05:25:29.503Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-07T05:27:42.730Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-07T05:27:44.970Z] WinstonService [32minfo[39m: Mon Aug 07 2023 10:57:44 GMT+0530 (India Standard Time) : /api/employees : POST
+[2023-08-07T05:28:35.746Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-07T05:28:43.072Z] WinstonService [32minfo[39m: Mon Aug 07 2023 10:58:43 GMT+0530 (India Standard Time) : /api/employees : GET
+[2023-08-07T05:31:14.115Z] WinstonService [32minfo[39m: Mon Aug 07 2023 11:01:14 GMT+0530 (India Standard Time) : /api/employees/1 : GET
+[2023-08-07T06:13:06.211Z] WinstonService [32minfo[39m: Mon Aug 07 2023 11:43:06 GMT+0530 (India Standard Time) : /api/departments : GET
+[2023-08-07T06:21:02.872Z] WinstonService [32minfo[39m: Mon Aug 07 2023 11:51:02 GMT+0530 (India Standard Time) : /api/employees : GET
+[2023-08-07T06:21:17.572Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-07T06:21:18.702Z] WinstonService [32minfo[39m: Mon Aug 07 2023 11:51:18 GMT+0530 (India Standard Time) : /api/employees : GET
+[2023-08-07T06:32:51.769Z] WinstonService [32minfo[39m: Mon Aug 07 2023 12:02:51 GMT+0530 (India Standard Time) : /api/employees : POST
+[2023-08-07T06:45:53.335Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-07T06:45:55.426Z] WinstonService [32minfo[39m: Mon Aug 07 2023 12:15:55 GMT+0530 (India Standard Time) : /api/employees : POST
+[2023-08-07T06:49:35.977Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-07T06:49:41.207Z] WinstonService [32minfo[39m: Mon Aug 07 2023 12:19:41 GMT+0530 (India Standard Time) : /api/employees : POST
+[2023-08-07T06:51:28.074Z] WinstonService [32minfo[39m: Mon Aug 07 2023 12:21:28 GMT+0530 (India Standard Time) : /api/employees : POST
+[2023-08-07T06:51:35.293Z] WinstonService [31merror[39m: insert or update on table "employees" violates foreign key constraint "FK_678a3540f843823784b0fe4a4f2"
+[2023-08-07T07:50:34.923Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-07T07:50:37.416Z] WinstonService [32minfo[39m: Mon Aug 07 2023 13:20:37 GMT+0530 (India Standard Time) : /api/employees : GET
+[2023-08-07T07:51:21.173Z] WinstonService [32minfo[39m: Mon Aug 07 2023 13:21:21 GMT+0530 (India Standard Time) : /api/employees : POST
+[2023-08-07T07:51:21.271Z] WinstonService [31merror[39m: insert or update on table "employees" violates foreign key constraint "FK_678a3540f843823784b0fe4a4f2"
+[2023-08-07T07:51:33.142Z] WinstonService [32minfo[39m: Mon Aug 07 2023 13:21:33 GMT+0530 (India Standard Time) : /api/employees : POST
+[2023-08-07T07:51:53.278Z] WinstonService [32minfo[39m: Mon Aug 07 2023 13:21:53 GMT+0530 (India Standard Time) : /api/employees/729b2cfc-eb80-42e6-ba15-5cb900a81c65 : PATCH
+[2023-08-07T07:51:53.308Z] WinstonService [31merror[39m: invalid input syntax for type integer: "NaN"
+[2023-08-07T07:54:52.924Z] WinstonService [32minfo[39m: server is listening to 3000
+[2023-08-07T07:54:56.678Z] WinstonService [32minfo[39m: Mon Aug 07 2023 13:24:56 GMT+0530 (India Standard Time) : /api/employees/729b2cfc-eb80-42e6-ba15-5cb900a81c65 : PATCH
+[2023-08-07T07:54:56.715Z] WinstonService [31merror[39m: invalid input syntax for type integer: "NaN"
+[2023-08-07T07:55:17.706Z] WinstonService [32minfo[39m: Mon Aug 07 2023 13:25:17 GMT+0530 (India Standard Time) : /api/employees/1 : PATCH
+[2023-08-07T07:55:23.620Z] WinstonService [32minfo[39m: Mon Aug 07 2023 13:25:23 GMT+0530 (India Standard Time) : /api/employees : GET
+[2023-08-07T07:55:31.749Z] WinstonService [32minfo[39m: Mon Aug 07 2023 13:25:31 GMT+0530 (India Standard Time) : /api/employees/7 : PATCH
+[2023-08-07T07:55:43.853Z] WinstonService [32minfo[39m: Mon Aug 07 2023 13:25:43 GMT+0530 (India Standard Time) : /api/employees : GET

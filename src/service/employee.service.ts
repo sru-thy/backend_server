@@ -18,7 +18,7 @@ export class EmployeeService {
     return this.empRepository.find();
   }
 
-  async getEmployeeByID(id: string): Promise<any> {
+  async getEmployeeByID(id: number): Promise<any> {
     const employee = await this.empRepository.findOneBy({ id: id });
     if (!employee) {
       throw new HttpException(404, "employee not found");
@@ -43,7 +43,7 @@ export class EmployeeService {
     newEmployee.role = role;
     newEmployee.experience = experience;
     newEmployee.joiningDate = joiningDate;
-    newEmployee.department = <any>Number(department); // typesafe?
+    newEmployee.departmentId = Number(department); 
 
     const newAddress = new Address();
     newAddress.line1 = address.line1;
@@ -57,20 +57,23 @@ export class EmployeeService {
   }
 
   async updateEmployee(
-    id: string,
+    id: number,
     updateEmployeeDto: UpdateEmployeeDto
   ): Promise<Employee> {
-    // const employeetoupdate = await this.empRepository.findOneBy({ id: id });
-
-    const { departmentId, ...otherProps } = updateEmployeeDto;
-
-    const newupdateEmployeeDto = { department: departmentId, ...otherProps };
-
-    return await this.empRepository.updateEmployee(id, newupdateEmployeeDto);
+    const employee = await this.empRepository.findOneBy({ id: id });
+    if (!employee) {
+      throw new HttpException(404, "employee not found");
+    }
+    return await this.empRepository.updateEmployee(id, updateEmployeeDto);
   }
 
-  deleteEmployee(id: string): Promise<Employee> {
-    return this.empRepository.deleteEmployee(id);
+  async deleteEmployee(id: number): Promise<Employee> {
+
+    const employee = await this.empRepository.findOneBy({ id: id });
+    if (!employee) {
+      throw new HttpException(404, "employee not found");
+    }
+    return this.empRepository.deleteEmployee(employee);
   }
 
   loginEmployee = async (username: string, password: string) => {

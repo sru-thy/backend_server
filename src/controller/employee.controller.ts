@@ -62,7 +62,7 @@ export class EmployeeController {
   ) => {
     try {
       const employee = await this.employeeService.getEmployeeByID(
-        req.params.id
+        Number(req.params.id)
       );
       res.status(200).send(
         new jsonResponse(employee, "OK", null, {
@@ -117,8 +117,8 @@ export class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      const id = req.params.id;
-      await this.employeeService.getEmployeeByID(req.params.id);
+      const id = Number(req.params.id);
+      await this.employeeService.getEmployeeByID(id);
 
       const updateEmployeeDto = plainToInstance(UpdateEmployeeDto, req.body);
       const errors = await validate(updateEmployeeDto);
@@ -144,7 +144,7 @@ export class EmployeeController {
 
   deleteEmployee = async (req: express.Request, res: express.Response) => {
     const id = req.params.id;
-    const employee = await this.employeeService.deleteEmployee(id);
+    const employee = await this.employeeService.deleteEmployee(Number(id));
     res.status(204).send(employee);
   };
 

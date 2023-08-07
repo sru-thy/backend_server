@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "build": "rm -rf dist && npx tsc && cp .env ./dist/.env",
-    "test": "jest --verbose",
-    "test-coverage": "jest --coverage",
+    "test": "jest --verbose --setupFiles dotenv/config",
+    "test-coverage": "jest --coverage --verbose --setupFiles dotenv/config",
     "start-server": "npm run build && node dist/app.js",
     "develop": "nodemon ./src/app.ts",
     "migration:generate": "npm run build && npx typeorm migration:generate -d dist/db/postgres.db.js",
