@@ -118,7 +118,8 @@ export class DepartmentController {
     try {
       const { name } = req.body;
       const id = Number(req.params.id);
-
+      await this.departmentService.getDepartmentByID(id);
+    
       const updateDepartmentDto = plainToInstance(
         UpdateDepartmentDto,
         req.body
@@ -144,9 +145,14 @@ export class DepartmentController {
     }
   };
 
-  deleteDepartment = async (req: express.Request, res: express.Response) => {
+  deleteDepartment = async (req: express.Request, res: express.Response,next: NextFunction) => {
+    try{
     const id = Number(req.params.id);
+    await this.departmentService.getDepartmentByID(id);
     const department = await this.departmentService.deleteDepartment(id);
     res.status(201).send(department);
+    }catch(err){
+      next(err)
+    }
   };
 }

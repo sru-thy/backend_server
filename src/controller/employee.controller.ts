@@ -28,7 +28,12 @@ export class EmployeeController {
       authorize(userRoles.admin),
       this.getEmployeeByID
     );
-    this.router.post("/", this.createEmployee);
+    this.router.post(
+      "/",
+      authenticate,
+      authorize(userRoles.admin),
+      this.createEmployee
+    );
     this.router.patch(
       "/:id",
       authenticate,
@@ -67,7 +72,7 @@ export class EmployeeController {
       res.status(200).send(
         new jsonResponse(employee, "OK", null, {
           length: 1,
-          took: new Date().getTime()- req.body.time,
+          took: new Date().getTime() - req.body.time,
           total: 1,
         })
       );
@@ -102,7 +107,7 @@ export class EmployeeController {
       res.status(201).send(
         new jsonResponse(employee, "OK", null, {
           length: 1,
-          took: new Date().getTime()- req.body.time,
+          took: new Date().getTime() - req.body.time,
           total: 1,
         })
       );
@@ -118,6 +123,7 @@ export class EmployeeController {
   ) => {
     try {
       const id = Number(req.params.id);
+      
       await this.employeeService.getEmployeeByID(id);
 
       const updateEmployeeDto = plainToInstance(UpdateEmployeeDto, req.body);
@@ -142,10 +148,18 @@ export class EmployeeController {
     }
   };
 
-  deleteEmployee = async (req: express.Request, res: express.Response) => {
-    const id = req.params.id;
-    const employee = await this.employeeService.deleteEmployee(Number(id));
-    res.status(204).send(employee);
+  deleteEmployee = async (
+    req: express.Request,
+    res: express.Response,
+    next: NextFunction
+  ) => {
+    try {
+      const id = req.params.id;
+      const employee = await this.employeeService.deleteEmployee(Number(id));
+      res.status(204).send(employee);
+    } catch (err) {
+      next(err);
+    }
   };
 
   public loginEmployee = async (
