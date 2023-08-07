@@ -10,6 +10,7 @@ import authenticate from "../middleware/authenticateMiddleware";
 import authorize from "../middleware/authorizeMiddleware";
 import { Role, userRoles } from "../utils/role.enum";
 import jsonResponse from "../utils/response";
+import logger from "../utils/winstonLogger";
 
 export class EmployeeController {
   public router: express.Router;
@@ -52,7 +53,8 @@ export class EmployeeController {
   getAllEmployees = async (req: express.Request, res: express.Response) => {
     const skip = Number(req.query.skip) || 0;
     const take = Number(req.query.take) || 10;
-    const employee = await this.employeeService.getAllEmployees(skip,take);
+    const employee = await this.employeeService.getAllEmployees(skip, take);
+    logger.info(`get all employees`)
     res.status(200).send(
       new jsonResponse(employee, "OK", null, {
         length: employee[0].length,
@@ -71,6 +73,7 @@ export class EmployeeController {
       const employee = await this.employeeService.getEmployeeByID(
         Number(req.params.id)
       );
+      logger.info(`get employes by ID`)
       res.status(200).send(
         new jsonResponse(employee, "OK", null, {
           length: 1,
@@ -106,6 +109,7 @@ export class EmployeeController {
         createEmployeeDto.joiningDate,
         createEmployeeDto.departmentId
       );
+      logger.info(`Employee created`)
       res.status(201).send(
         new jsonResponse(employee, "OK", null, {
           length: 1,
@@ -125,7 +129,7 @@ export class EmployeeController {
   ) => {
     try {
       const id = Number(req.params.id);
-      
+
       await this.employeeService.getEmployeeByID(id);
 
       const updateEmployeeDto = plainToInstance(UpdateEmployeeDto, req.body);
@@ -138,6 +142,7 @@ export class EmployeeController {
         id,
         updateEmployeeDto
       );
+      logger.info(`Employee updated`)
       res.status(201).send(
         new jsonResponse(employee, "OK", null, {
           length: 1,
@@ -158,6 +163,7 @@ export class EmployeeController {
     try {
       const id = req.params.id;
       const employee = await this.employeeService.deleteEmployee(Number(id));
+      logger.info(`Empoyee deleted`)
       res.status(204).send(employee);
     } catch (err) {
       next(err);
@@ -172,6 +178,7 @@ export class EmployeeController {
     try {
       const { username, password } = req.body;
       const data = await this.employeeService.loginEmployee(username, password);
+      logger.info(`Employee : ${username} Logged in`)
       res.status(200).send(
         new jsonResponse(data, "OK", null, {
           length: 1,

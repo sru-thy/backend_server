@@ -23,6 +23,7 @@ server.get("/", (req, res) => {
 });
 
 server.get("/api/roles", (req, res) => {
+  logger.info("GET on /api/roles");
   res.status(200).send(
     new jsonResponse(Role, "OK", null, {
       length: 1,

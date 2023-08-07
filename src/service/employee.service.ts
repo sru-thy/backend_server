@@ -14,8 +14,11 @@ import { UpdateResult } from "typeorm";
 export class EmployeeService {
   constructor(private empRepository: EmployeeRepository) {}
 
-  getAllEmployees(skip:number =0 ,take:number =10): Promise<[Employee[], number]> {
-    return this.empRepository.find(skip,take);
+  getAllEmployees(
+    skip: number = 0,
+    take: number = 10
+  ): Promise<[Employee[], number]> {
+    return this.empRepository.find(skip, take);
   }
 
   async getEmployeeByID(id: number): Promise<any> {
@@ -43,7 +46,7 @@ export class EmployeeService {
     newEmployee.role = role;
     newEmployee.experience = experience;
     newEmployee.joiningDate = joiningDate;
-    newEmployee.departmentId = Number(department); 
+    newEmployee.departmentId = Number(department);
 
     const newAddress = new Address();
     newAddress.line1 = address.line1;
@@ -68,7 +71,6 @@ export class EmployeeService {
   }
 
   async deleteEmployee(id: number): Promise<Employee> {
-
     const employee = await this.empRepository.findOneBy({ id: id });
     if (!employee) {
       throw new HttpException(404, "employee not found");

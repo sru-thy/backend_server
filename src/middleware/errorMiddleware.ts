@@ -12,7 +12,9 @@ const errorMidlleware = (
   try {
     if (error instanceof HttpException) {
       res.status(error.status).send({ message: "Http Errors", errors: error.message });
+      logger.error(`${error.status} : ${error.message}`)
     } else if (error instanceof ValidationException) {
+      logger.error(`${error.status} : ${error.message}`)
       res
         .status(error.status)
         .send({ message: "Validation Errors", errors: error.errors });

@@ -10,6 +10,7 @@ import authenticate from "../middleware/authenticateMiddleware";
 import authorize from "../middleware/authorizeMiddleware";
 import { userRoles } from "../utils/role.enum";
 import jsonResponse from "../utils/response";
+import logger from "../utils/winstonLogger";
 
 export class DepartmentController {
   public router: Router;
@@ -66,6 +67,7 @@ export class DepartmentController {
       const department = await this.departmentService.createDepartment(
         createDepartmentDto.name
       );
+      logger.info('department created')
       res.status(201).send(
         new jsonResponse(department, "OK", null, {
           length: 1,
@@ -80,6 +82,7 @@ export class DepartmentController {
 
   getAllDepartments = async (req: express.Request, res: express.Response) => {
     const department = await this.departmentService.getAllDepartments();
+    logger.info('get all departments')
     res.status(200).send(
       new jsonResponse(department, "OK", null, {
         length: department.length,
@@ -98,6 +101,7 @@ export class DepartmentController {
       const department = await this.departmentService.getDepartmentByID(
         Number(req.params.id)
       );
+      logger.info('get department by id')
       res.status(200).send(
         new jsonResponse(department, "OK", null, {
           length: department.length,
@@ -133,6 +137,7 @@ export class DepartmentController {
         name,
         id
       );
+      logger.info('update department')
       res.status(201).send(
         new jsonResponse(department, "OK", null, {
           length: 1,
@@ -150,6 +155,7 @@ export class DepartmentController {
     const id = Number(req.params.id);
     await this.departmentService.getDepartmentByID(id);
     const department = await this.departmentService.deleteDepartment(id);
+    logger.info('deleted department')
     res.status(201).send(department);
     }catch(err){
       next(err)
